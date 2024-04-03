@@ -107,7 +107,10 @@ Then answer the parts of question 1 below.
 
         does the resulting code typecheck?  Please answer yes or no.
 
-            > ...your answer here...
+            > yes b/c although "exception NotFound of name" is not declared
+            in the "signature", it does not violate any rules in the
+            definition of "SIG mathces Sig". It's possible that "Sig"
+            contains more definition that "SIG".
 
     (b) Assume the structure binding in part (a) does typecheck, i.e., we now
         have a structure identifier named "Env" through which we can access
@@ -118,7 +121,7 @@ Then answer the parts of question 1 below.
             fun extendEnv (names, vals, rho) =
               ListPair.foldrEq Env.bindVar rho (names, vals)
 
-             >
+             > yes
 
     (c) With the same assumption from (b), does the signature expose enough 
         information for us to write the following function?  Please answer 
@@ -127,15 +130,23 @@ Then answer the parts of question 1 below.
             fun isBound (name, rho) = (Env.lookup (name,rho)) 
                                       handle Env.NotFound _ => false
 
-             >
+             > no b/c the "NotFound" exception only defines with "Sig"
+             meaning the client won't have access to the exception.
 
 
     (d) In part (b) and/or part (c), it is not possible to write the
         function given. Change the signature to make it possible.
         Please copy, paste, and edit your new version here:
 
-
-
+          > NEW SIG
+            signature ENV = sig
+              exception NotFound of name      --> new declaration
+              type name = string
+              type 'a env
+              val emptyEnv : 'a env
+              val lookup   : name * 'a env -> 'a
+              val bindVar  : name * 'a * 'a env -> 'a env
+            end
 
 
 
@@ -154,7 +165,9 @@ Then answer the parts of question 1 below.
         The new structure `Env'`, sealed with signature `ENV'`, is useless.
         Please explain *why* it is useless:
 
-
+          > Within the "Sig" signature, the "name" type is still implemented
+          using the "string" datatype. Therefore, clients will be notified
+          once an incorrect type is provided upon invoking "Env.name".
 
 
     *You now have the basic ideas needed to understand what is being

@@ -1,0 +1,25 @@
+
+README
+CS 105 - Modules and Abstract Types
+
+Authors: Sophonni Dy (sdy01)
+
+Parts of the assignment completed: all
+
+Any comments or feedback for course staff: none
+
+Time Spent:
+
+Command Reference
+    - compile105-modules: compile all files together
+    - compile105-modules natural.sml: compile one specific file
+
+    Intepreter Commands
+        - ledit mosml -I /comp/105/lib: use the itepreter
+        - load "natural"
+
+TODO:
+    -   CQ: double check 1.e with TA
+
+Time Tracker
+    2:20 am - 2:50 pm
