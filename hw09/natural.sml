@@ -122,7 +122,30 @@ structure GNatural : NATURAL = struct
   *  compare (n1, n2) == GREATER, when n1 > n2
   *
   *)
-  fun compare (x, y) = raise LeftAsExercise
+  fun compare (ZERO, ZERO) = EQUAL
+    | compare (TIMESBASEPLUS (nat, dec), ZERO) = GREATER
+    | compare (ZERO, TIMESBASEPLUS (nat, dec)) = LESS
+    | compare (TIMESBASEPLUS (nat1, dec1), TIMESBASEPLUS (nat2, dec2)) =
+      (* if the natural numbers are equal, it's possible that their decimal aren't *)
+      if (nat1 = nat2) then
+        
+        (* case when both the natural numbers and their decimals are the exact same *)
+        if (dec1 = dec2) then
+          EQUAL
+        else
+
+          (* case when the natural numbers are the same, but their decimal of n1 < decimal of n2 *)
+          if (dec1 < dec2) then
+            LESS
+
+          (* case when the natural numbers are the same, but their decimal of n2 < decimal of n1 *)
+          else
+            GREATER
+      
+      (* case when the natural numbers are different, thus we need to recursively check the naturals numbers and their decimals *)
+      else
+        compare (nat1, nat2)
+
 
   (* decimal n returns a list giving the natural decimal
      representation of n, most significant digit first.
