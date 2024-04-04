@@ -113,7 +113,24 @@ structure GNatural : NATURAL = struct
      If d <= 0 or d > base (where "base" is the hidden base selected to
      implement natural numbers), sdiv (n, d) raises BadDivisor.
   *)
-  fun x sdiv d = raise LeftAsExercise
+  (* m = TIMESBASEPLUS (nat, dec)
+    v = digit
+    b = base
+    d = dec
+   *)
+  fun ZERO sdiv _ = { quotient = ZERO, remainder = 0 }
+    | (TIMESBASEPLUS (nat, dec)) sdiv c =
+    let
+      val { quotient = q, remainder = r} = nat sdiv c
+      val intVers = (r + dec) div c
+      val q' = timesBase q /+/ (ofInt intVers)
+      val r' = (r + dec) mod c
+      (* val rmd = r' mod (ofInt base) *)
+    in
+      { quotient = q', remainder = r' }
+    end
+
+(* SD NOTE: BOTTOM IS WHAT TYPE IT WANTS, TOP IS WHAT TYPE IT'S CURRENTLY IS *)
 
   (* Compare two natural numbers, following these hand-wavy laws:
   *
