@@ -13,6 +13,15 @@ Time Spent:
 Command Reference
     - compile105-modules: compile all files together
     - compile105-modules natural.sml: compile one specific file
+    - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml: run unit test for natural.sml
+
+    Testing Sort
+        - compile105-modules sort.sml
+        - mosmlc -I /comp/105/lib -toplevel pq-sig.ui heap.sml
+        - ledit mosml -I /comp/105/lib
+        - load "heap";
+        - load "sort";
+        - structure MySort = PQSortFn(structure Q = IntHeap);
 
     Intepreter Commands
         - ledit mosml -I /comp/105/lib: use the itepreter
@@ -31,4 +40,4 @@ Time Tracker
     11:10 pm - 12:00 am
     12:30 pm - 1:25 pm
     4:30 pm - 5:30 pm
-    10:50 pm
+    10:50 pm - 3:00 pm
