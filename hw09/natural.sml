@@ -122,10 +122,9 @@ structure GNatural : NATURAL = struct
     | (TIMESBASEPLUS (nat, dec)) sdiv c =
     let
       val { quotient = q, remainder = r} = nat sdiv c
-      val intVers = (r + dec) div c
+      val intVers = ((r * base) + dec) div c
       val q' = timesBase q /+/ (ofInt intVers)
-      val r' = (r + dec) mod c
-      (* val rmd = r' mod (ofInt base) *)
+      val r' = ((r * base) + dec) mod c
     in
       { quotient = q', remainder = r' }
     end
@@ -143,35 +142,60 @@ structure GNatural : NATURAL = struct
     | compare (TIMESBASEPLUS (nat, dec), ZERO) = GREATER
     | compare (ZERO, TIMESBASEPLUS (nat, dec)) = LESS
     | compare (TIMESBASEPLUS (nat1, dec1), TIMESBASEPLUS (nat2, dec2)) =
-      (* if the natural numbers are equal, it's possible that their decimal aren't *)
+      (*  if the natural numbers are equal, it's possible that their
+          decimal aren't *)
       if (nat1 = nat2) then
         
-        (* case when both the natural numbers and their decimals are the exact same *)
+        (*  case when both the natural numbers and their decimals are
+            the exact same *)
         if (dec1 = dec2) then
           EQUAL
         else
 
-          (* case when the natural numbers are the same, but their decimal of n1 < decimal of n2 *)
+          (*  case when the natural numbers are the same, but their decimal
+              of n1 < decimal of n2 *)
           if (dec1 < dec2) then
             LESS
 
-          (* case when the natural numbers are the same, but their decimal of n2 < decimal of n1 *)
+          (*  case when the natural numbers are the same, but their
+              decimal of n2 < decimal of n1 *)
           else
             GREATER
       
-      (* case when the natural numbers are different, thus we need to recursively check the naturals numbers and their decimals *)
+      (*  case when the natural numbers are different, thus we need to
+          recursively check the naturals numbers and their decimals *)
       else
         compare (nat1, nat2)
 
-
-  (* decimal n returns a list giving the natural decimal
-     representation of n, most significant digit first.
-     For example,  decimal (ofInt 123) = [1, 2, 3]
-                   decimal (ofInt 0)   = [0]
-     It must never return an empty list, and when it returns a 
-     list of two or more digits, the first digit must not be zero.
+  (*  Function: reverse_decimals
+   *  Purpose:  Given a natural number, convert the natural number into
+              base-10 and return a list consist of digits of the base-10
+              representation of the natural number, in reverse order.
   *)
-  fun decimal x = raise LeftAsExercise
+  fun reverse_decimals ZERO = []
+    | reverse_decimals (TIMESBASEPLUS (nat, dec)) = 
+      let
+        val { quotient = q, remainder = r } =
+              (TIMESBASEPLUS (nat, dec)) sdiv 10
+      in
+        r :: reverse_decimals q
+      end
+
+  (*  Function: 
+   *  Purpose: given a natural number 'n', returns a list giving the
+              natural decimal representation of n, most significant digit first.
+   *  For example:
+                  decimal (ofInt 123) = [1, 2, 3]
+                  decimal (ofInt 0)   = [0]
+   *  Note: this function never returns an empty list, and when it returns a 
+          list of two or more digits, the first digit is never zero.
+  *)
+
+  (* SD TODO::TO REMOVE::(GNatural.decimal (GNatural.ofInt 2018)); *)
+  (* SD TODO::TO REMOVE::(GNatural.decimal (GNatural.ofInt 325235)); *)
+  fun decimal ZERO = [0]
+    | decimal (TIMESBASEPLUS (nat, dec)) =
+          List.rev (reverse_decimals (TIMESBASEPLUS (nat, dec)))
 
 end
 
