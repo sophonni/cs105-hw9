@@ -7,6 +7,7 @@ functor PQSortFn(structure Q : PQUEUE) : SORT where type elem = Q.elem =
         type sortedElemList = Q.elem list
         val emptyList = []
         val emptyPQueue = Q.empty
+        val PQue = Q.empty
         fun compare (elem1, elem2) = Q.compare_elem (elem1, elem2)
 
 
@@ -34,12 +35,44 @@ functor PQSortFn(structure Q : PQUEUE) : SORT where type elem = Q.elem =
         |   addElemToPQue xs = 
             let
                 val toAddElement = fn (x, accum) => Q.insert (x, accum)
-                val resultingPQue = foldl toAddElement Q.empty xs
+                val resultingPQue = foldl toAddElement PQue xs
             in
                 resultingPQue
             end
 
         (* return the list in an increasing order *)
         fun sort [] = emptyList
-        |   sort (x::xs) = raise LeftAsExercise
+        | sort (x::xs) = 
+            let
+                val resultingPQue = addElemToPQue (x::xs)
+                val resultingList = if (Q.isEmpty resultingPQue) then
+                                        []
+                                    else
+                                        let
+                                            val (minElem, _) =
+                                                    Q.deletemin resultingPQue
+                                        in
+                                            sort xs @ [minElem]
+                                            (* case Q.compare_elem (x, minElem)
+
+                                            (* maintain the invarient by
+                                            always append the 'x' front of
+                                            the list if it's GREATER than
+                                            the 'minElem' recieve from the
+                                            Priority Queue *)
+                                            of  GREATER => x :: sort xs
+
+                                            (* always append 'x' to the back
+                                            of the list if it's <= 'minElem'
+                                            recieve from the Priority Queue*)
+                                            |   _ => sort xs @ [x] *)
+                                        end
+            in
+                resultingList
+            end
+        
+        
+        
+        
+        (* raise LeftAsExercise *)
     end
