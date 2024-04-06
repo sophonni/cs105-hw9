@@ -10,6 +10,19 @@ Any comments or feedback for course staff: none
 
 Time Spent:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 Command Reference
     - compile105-modules: compile all files together
 
@@ -42,7 +55,7 @@ Command Reference
         - ledit mosml -I /comp/105/lib
         - load "bignum";
         - load "natural";
-        - structure BN = BignumFn(structure N = Natural);
+        - structure BN = BignumFn(structure N = GNatural);
 
     Intepreter Commands
         - ledit mosml -I /comp/105/lib: use the itepreter
@@ -63,4 +76,4 @@ Time Tracker
     12:30 pm - 1:25 pm
     4:30 pm - 5:30 pm
     10:50 pm - 3:00 pm
-    6:35 pm
+    1:21 pm - 
