@@ -55,6 +55,11 @@ Command Reference
         - ledit mosml -I /comp/105/lib
         - load "bignum";
         - load "natural";
+        - load "bignum-tests";
+        - structure B  = BignumFn(structure N = Natural);
+        - structure BT = UnitTestsFun(structure Bignum = B);
+        - BT.run();
+
         - structure BN = BignumFn(structure N = GNatural);
 
     Intepreter Commands
@@ -76,4 +81,4 @@ Time Tracker
     12:30 pm - 1:25 pm
     4:30 pm - 5:30 pm
     10:50 pm - 3:00 pm
-    1:21 pm - 
+    1:21 pm - 5:10 pm

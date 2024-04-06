@@ -38,66 +38,102 @@ functor BignumFn(structure N : NATURAL) : BIGNUM =
         fun (NEG x) <+> (POS y) =
             (case (N.compare (x, y))
             of  EQUAL => ZERO
-            (* big negative + small positive = negative. Thus,
-            raise exception *)
-            |   GREATER => raise N.Negative
+            |   GREATER => NEG (x /-/ y)
             |   LESS => POS (y /-/ x)
             )
-        (* negative + negative = negative. Thus, raise exception *)
-        |   (NEG x) <+> (NEG y) = raise N.Negative
-        |   (NEG x) <+> ZERO = raise N.Negative
+        |   (NEG x) <+> (NEG y) = NEG (x /+/ y)
+        |   (NEG x) <+> ZERO = NEG x
         |   (POS x) <+> (POS y) =   POS (x /+/ y)
         |   (POS x) <+> (NEG y) =
             (case (N.compare (x, y))
             of  EQUAL => ZERO
             |   GREATER => POS (x /-/ y)
-                (* small positive + big negative = negative. Thus,
-                raise exception *)
-            |   LESS => raise N.Negative
+            |   LESS => NEG (y /-/ x)
             )
         |   (POS x) <+> ZERO = (POS x)
         |   ZERO <+> (POS y) = (POS y)
-        (* 0 + negative = negative. Thus, raise exception *)
-        |   ZERO <+> (NEG y) = raise N.Negative
+        |   ZERO <+> (NEG y) = NEG y
         |   ZERO <+> ZERO = ZERO
 
 
 
-            (* (case (N.compare (x, y))
-            of  EQUAL =>
-            |   LESS => 
-            |   GREATER => 
-            ) *)
-
         fun (NEG x) <-> (POS y) =
             (case (N.compare (x, y))
             of  EQUAL => ZERO
-                (* negative - any positive = negative. Thus, raise exception *)
-            |   _ => raise N.Negative
+            |   _ => NEG (x /+/ y)
             )
         |   (NEG x) <-> (NEG y) =
             (case (N.compare (x, y))
             of  EQUAL => ZERO
             |   LESS => POS (y /-/ x)
-                (* big negative - small negative = negative. Thus, raise exception *)
-            |   GREATER => raise N.Negative
+            |   GREATER => NEG (x /-/ y)
             )
-        |   (NEG x) <-> ZERO = raise N.Negative
+        |   (NEG x) <-> ZERO = NEG x
         |   (POS x) <-> (POS y) =
             (case (N.compare (x, y))
                 of  EQUAL => ZERO
-                |   LESS => raise N.Negative
+                |   LESS => NEG (y /-/ x)
                 |   GREATER => POS (x /-/ y)
             )
         |   (POS x) <-> (NEG y) = POS (x /+/ y)
         |   (POS x) <-> ZERO = (POS x)
-        |   ZERO <-> (POS y) = raise N.Negative
+        |   ZERO <-> (POS y) = NEG y
         |   ZERO <-> (NEG y) = (POS y)
         |   ZERO <-> ZERO = ZERO
 
-        fun x <*> y = raise LeftAsExercise
-        fun compare (x, y) = raise LeftAsExercise
-        fun bigInt sdiv c = raise LeftAsExercise
-        fun toString bigInt = raise LeftAsExercise
+
+
+        (* (case (N.compare (x, y))
+        of  EQUAL =>
+        |   LESS => 
+        |   GREATER => 
+        ) *)
+        fun (NEG x) <*> (POS y) = NEG (x /*/ y)
+        |   (NEG x) <*> (NEG y) = POS (x /*/ y)
+        |   (NEG x) <*> ZERO = ZERO
+
+        |   (POS x) <*> (POS y) = POS (x /*/ y)
+        |   (POS x) <*> (NEG y) = NEG (x /*/ y)
+        |   (POS x) <*> ZERO = ZERO
+
+        |   ZERO <*> (POS y) = ZERO
+        |   ZERO <*> (NEG y) = ZERO
+        |   ZERO <*> ZERO = ZERO
+
+        fun compare (NEG x, POS y) = LESS
+        |   compare (NEG x, NEG y) = N.compare (y, x)
+        |   compare (NEG x, ZERO) = LESS
+
+        |   compare (POS x, POS y) = N.compare (x, y)
+        |   compare (POS x, NEG y) = GREATER
+        |   compare (POS x, ZERO) = GREATER
+
+        |   compare (ZER0, POS y) = LESS
+        |   compare (ZER0, NEG y) = GREATER
+        |   compare (_, _) = EQUAL
+
+
+        fun (POS x) sdiv c =
+            let
+                val { quotient = q, remainder = r } = N.sdiv (x, c)
+            in
+                { quotient = POS q, remainder = r }
+            end
+        |   _ sdiv c = raise LeftAsExercise
+
+
+        fun toStringHelper x =
+            let
+                val arrayOfDigit = N.decimal x
+                val toConcat = (fn (x, accum) => Int.toString x ^ accum)
+                val resultingStr = foldr toConcat "" arrayOfDigit
+            in
+                resultingStr
+            end
+
+
+        fun toString (POS x) = toStringHelper x
+        |   toString (NEG x) = "-" ^ toStringHelper x
+        |   toString ZER0 = "0" 
 
     end
