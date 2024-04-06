@@ -130,13 +130,14 @@ structure GNatural : NATURAL = struct
     end
 
 (* SD NOTE: BOTTOM IS WHAT TYPE IT WANTS, TOP IS WHAT TYPE IT'S CURRENTLY IS *)
-
-  (* Compare two natural numbers, following these hand-wavy laws:
-  *
-  *  compare (n1, n2) == EQUAL, when n1 == n2
-  *  compare (n1, n2) == LESS, when n1 < n2
-  *  compare (n1, n2) == GREATER, when n1 > n2
-  *
+  (*
+   *  Function: compare
+   *  Purpose: Given a two natural numbers say 'n1' and 'n2', compare the
+   *          two natural numbers return value comparison value that
+   *          follows these laws:
+   *            - 'GREATER' if 'n1 > n2'
+   *            - 'LESS' if 'n1 < n2'
+   *            - 'EQUAL' if 'n1 = n2'
   *)
   fun compare (ZERO, ZERO) = EQUAL
     | compare (TIMESBASEPLUS (nat, dec), ZERO) = GREATER
@@ -183,16 +184,13 @@ structure GNatural : NATURAL = struct
 
   (*  Function: 
    *  Purpose: given a natural number 'n', returns a list giving the
-              natural decimal representation of n, most significant digit first.
+   *          natural decimal representation of n, most significant digit first.
    *  For example:
-                  decimal (ofInt 123) = [1, 2, 3]
-                  decimal (ofInt 0)   = [0]
+   *              decimal (ofInt 123) = [1, 2, 3]
+   *              decimal (ofInt 0)   = [0]
    *  Note: this function never returns an empty list, and when it returns a 
-          list of two or more digits, the first digit is never zero.
+   *      list of two or more digits, the first digit is never zero.
   *)
-
-  (* SD TODO::TO REMOVE::(GNatural.decimal (GNatural.ofInt 2018)); *)
-  (* SD TODO::TO REMOVE::(GNatural.decimal (GNatural.ofInt 325235)); *)
   fun decimal ZERO = [0]
     | decimal (TIMESBASEPLUS (nat, dec)) =
           List.rev (reverse_decimals (TIMESBASEPLUS (nat, dec)))

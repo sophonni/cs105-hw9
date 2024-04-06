@@ -23,6 +23,13 @@ Command Reference
         - load "sort";
         - structure MySort = PQSortFn(structure Q = IntHeap);
 
+    Testing BigNum
+        - compile105-modules bignum.sml
+        - ledit mosml -I /comp/105/lib
+        - load "bignum";
+        - load "natural";
+        - structure BN = BignumFn(structure N = Natural);
+
     Intepreter Commands
         - ledit mosml -I /comp/105/lib: use the itepreter
         - load "natural"
@@ -31,6 +38,7 @@ TODO:
     -   CQ: double check q1.e with TA
     -   CQ: q2.b
     -   natural.sdiv: should I handle div by 0
+    -   remove LeftAsExercise exception
 
 Time Tracker
     2:20 pm - 2:50 pm
