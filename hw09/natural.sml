@@ -120,14 +120,17 @@ structure GNatural : NATURAL = struct
    *)
   fun ZERO sdiv _ = { quotient = ZERO, remainder = 0 }
     | (TIMESBASEPLUS (nat, dec)) sdiv c =
-    let
-      val { quotient = q, remainder = r} = nat sdiv c
-      val intVers = ((r * base) + dec) div c
-      val q' = timesBase q /+/ (ofInt intVers)
-      val r' = ((r * base) + dec) mod c
-    in
-      { quotient = q', remainder = r' }
-    end
+      if (c <= 0) orelse (c > base) then
+        raise BadDivisor
+      else
+        let
+          val { quotient = q, remainder = r} = nat sdiv c
+          val intVers = ((r * base) + dec) div c
+          val q' = timesBase q /+/ (ofInt intVers)
+          val r' = ((r * base) + dec) mod c
+        in
+          { quotient = q', remainder = r' }
+        end
 
 (* SD NOTE: BOTTOM IS WHAT TYPE IT WANTS, TOP IS WHAT TYPE IT'S CURRENTLY IS *)
   (*

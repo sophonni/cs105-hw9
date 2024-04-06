@@ -12,9 +12,23 @@ Time Spent:
 
 Command Reference
     - compile105-modules: compile all files together
-    - compile105-modules natural.sml: compile one specific file
-    - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml: run unit test for natural.sml
 
+    Testing Natural Numbers Using Unit Test Written in 'nat-test.sml'
+        - compile105-modules natural.sml
+        - compile105-modules nat-test.sml 
+        - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml: run unit test for natural.sml
+
+    Testing Natural Numbers
+        - compile105-modules natural.sml
+        - ledit mosml -I /comp/105/lib
+        - load "natural";
+        - ctrl 'd' after testing
+        - mosmlc -o test -I /comp/105/lib -toplevel natural.ui tester.sml
+        - ledit mosml -I /comp/105/lib
+        - load "natural-tests";
+        - load "natural";
+        - structure Run = UnitTestsFun(structure Natural = Natural);
+        - Run.run();
     Testing Sort
         - compile105-modules sort.sml
         - mosmlc -I /comp/105/lib -toplevel pq-sig.ui heap.sml
@@ -35,10 +49,10 @@ Command Reference
         - load "natural"
 
 TODO:
-    -   CQ: double check q1.e with TA
-    -   CQ: q2.b
-    -   natural.sdiv: should I handle div by 0
+    -   TA::CQ::double check q1.e
+    -   TA::CQ::ask q2.b
     -   remove LeftAsExercise exception
+    -   TA::testing::how to run my 'nat-test.sml' unit test
 
 Time Tracker
     2:20 pm - 2:50 pm
