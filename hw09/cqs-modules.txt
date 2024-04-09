@@ -165,9 +165,11 @@ Then answer the parts of question 1 below.
         The new structure `Env'`, sealed with signature `ENV'`, is useless.
         Please explain *why* it is useless:
 
-          > Within the "Sig" signature, the "name" type is still implemented
-          using the "string" datatype. Therefore, clients will be notified
-          once an incorrect type is provided upon invoking "Env.name".
+          > A clash-type error occurs because 'name' is a generic type,
+          while functions such as 'lookup' and 'bindVar' require 'name' to be
+          a specific type. Therefore, when users invoke these functions,
+          an error arises. Since there's no scenario in which having 'name'
+          as a generic type is useful, the new structure is deemed useless.
 
 
     *You now have the basic ideas needed to understand what is being
@@ -228,7 +230,11 @@ For question 2, read about functors in section 23.1 in Harper.
         The ML compiler will reject this application of DictFun. Say one
         *specific* thing the compiler would complain about:
 
-            > 
+            > Given that 'DictFun' is defined as a functor which takes
+            one parameter, a structure `K` matching the signature `ORDERED`,
+            declaring a structure 'HIntDict = DictFun (structure K = IntHash)'
+            that takes in 'IntHash' matching the signature 'HASHABLE' will
+            cause an error.
             
 
     *You now understand functors well enough to use them in the second and last

@@ -151,23 +151,21 @@ functor BignumFn(structure N : NATURAL) : BIGNUM =
         |   compare (_, _) = EQUAL
 
         (*  Function: sdiv
-         *  Purpose: Given a 'bigint x' and a digit 'c',
-         *          divide 'bigint x' by digit 'c' using short division.
-         *          The return value is a record of the form:
+         *  Purpose: Given a non-negative 'bigint x' and a non-negative
+         *          digit 'c', divide 'bigint x' by digit 'c' using short
+         *          division. The return value is a record of the form:
          *          { quotient = q, remainder = r}
          *)
         fun (POS x) sdiv c =
-            let
-                val { quotient = q, remainder = r } = N.sdiv (x, c)
-            in
-                { quotient = POS q, remainder = r }
-            end
-        |   (NEG x) sdiv c =
-            let
-                val { quotient = q, remainder = r } = N.sdiv (x, c)
-            in
-                { quotient = NEG q, remainder = r }
-            end
+            if c < 0 then
+                raise Negative
+            else
+                let
+                    val { quotient = q, remainder = r } = N.sdiv (x, c)
+                in
+                    { quotient = POS q, remainder = r }
+                end
+        |   (NEG x) sdiv c = raise Negative
         |   ZERO sdiv c = { quotient = ZERO, remainder = 0 }
 
         (*  Function: convertArrOfDigitsToStr
