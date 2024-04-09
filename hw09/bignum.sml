@@ -1,5 +1,26 @@
 functor BignumFn(structure N : NATURAL) : BIGNUM =
     struct
+        (*  A 'bigint' is either 0, a negative natural number, or a
+        *   positive natural number. The representation of the ntural
+        *   number is of similar representation as 'N.nat'. However,
+        *   'bigint' datatype is used implement signed, arbitrary-precision
+        *   integers.
+
+        *
+        *  Invariants of 'bigint' Representation:
+        *   In values of the form ZERO,
+        *     - there are no invariants to maintain
+
+        *   In values of the form 'POS of N.nat',
+        *       - follows the same invariant as N.nat where the only
+        *       difference is this type constructor is used to represents
+        *       positive natural numbers
+        
+        *   In values of the form 'NEG of N.nat',
+        *       - follows the same invariant as N.nat where the only
+        *       difference is this type constructor is used to represents
+        *       negative natural numbers
+        *)
         datatype bigint = POS of N.nat
                         | NEG of N.nat
                         | ZERO
@@ -12,9 +33,8 @@ functor BignumFn(structure N : NATURAL) : BIGNUM =
         infix 6 /+/ /-/
         infix 7 /*/
 
-        exception Negative    (* raised if any operation's result would be negative *)
+        exception Negative
         exception BadDivision
-        exception LeftAsExercise
 
         fun ofInt intVal =  if (intVal < 0) then
                                 let
@@ -119,7 +139,13 @@ functor BignumFn(structure N : NATURAL) : BIGNUM =
             in
                 { quotient = POS q, remainder = r }
             end
-        |   _ sdiv c = raise LeftAsExercise
+        |   (NEG x) sdiv c =
+            let
+                val { quotient = q, remainder = r } = N.sdiv (x, c)
+            in
+                { quotient = NEG q, remainder = r }
+            end
+        |   ZERO sdiv c = { quotient = ZERO, remainder = 0 }
 
 
         fun toStringHelper x =
