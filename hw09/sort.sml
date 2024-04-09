@@ -1,7 +1,5 @@
 functor PQSortFn(structure Q : PQUEUE) :> SORT where type elem = Q.elem =
     struct
-        exception LeftAsExercise
-
         type elem = Q.elem
         type sortedElemList = Q.elem list
         val emptyList = []
@@ -25,7 +23,7 @@ functor PQSortFn(structure Q : PQUEUE) :> SORT where type elem = Q.elem =
         
         (*  Function: dequeMinAndCreateSortedList
          *  Purpose: Given a Priority Queue, returns a list of elements
-         *          that are in the Priority Queue, in a decending order.
+         *          that are in the Priority Queue, in an increasing order.
          *
         *)
         fun dequeMinAndCreateSortedList pq =
@@ -35,7 +33,7 @@ functor PQSortFn(structure Q : PQUEUE) :> SORT where type elem = Q.elem =
                 let
                     val (minElem, remaindingQue) = Q.deletemin pq
                 in
-                    dequeMinAndCreateSortedList remaindingQue @ [minElem]
+                    minElem :: dequeMinAndCreateSortedList remaindingQue
                 end
 
         (*  Function: sort

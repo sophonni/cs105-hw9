@@ -1,4 +1,4 @@
-functor BignumFn(structure N : NATURAL) : BIGNUM =
+functor BignumFn(structure N : NATURAL) :> BIGNUM =
     struct
         (*  A 'bigint' is either 0, a negative natural number, or a
         *   positive natural number. The representation of the ntural
