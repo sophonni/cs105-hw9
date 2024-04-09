@@ -29,7 +29,8 @@ Command Reference
     Testing Natural Numbers Using Unit Test Written in 'nat-test.sml'
         - compile105-modules natural.sml
         - compile105-modules nat-test.sml 
-        - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml: run unit test for natural.sml
+        - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml:
+            run unit test for natural.sml
 
     Testing Natural Numbers
         - compile105-modules natural.sml
@@ -62,9 +63,10 @@ Command Reference
 
         - structure BN = BignumFn(structure N = GNatural);
 
-    Intepreter Commands
-        - ledit mosml -I /comp/105/lib: use the itepreter
-        - load "natural"
+    Submission Commands
+        - compile105-modules
+        - sml-lint *.sml
+        - submit105-modules
 
 TODO:
     -   TA::CQ::double check q1.e
@@ -82,3 +84,4 @@ Time Tracker
     4:30 pm - 5:30 pm
     10:50 pm - 3:00 pm
     1:21 pm - 5:10 pm
+    3:00 pm - 4:00 pm

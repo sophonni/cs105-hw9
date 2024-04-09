@@ -64,7 +64,7 @@ structure GNatural : NATURAL = struct
   *)
   fun borrowFromNat (n, 0) = n
     | borrowFromNat (TIMESBASEPLUS (m, 0), 1) =
-        timesBasePlus (borrowFromNat (m, 1), (base - 1))
+        timesBasePlus (borrowFromNat (m, 1), base - 1)
     | borrowFromNat (TIMESBASEPLUS (m, d), 1) =
         timesBasePlus (m, d - 1)
     | borrowFromNat (ZERO, 1) = raise Negative
@@ -148,17 +148,17 @@ structure GNatural : NATURAL = struct
     | compare (TIMESBASEPLUS (nat1, dec1), TIMESBASEPLUS (nat2, dec2)) =
       (*  if the natural numbers are equal, it's possible that their
           decimal aren't *)
-      if (nat1 = nat2) then
+      if nat1 = nat2 then
         
         (*  case when both the natural numbers and their decimals are
             the exact same *)
-        if (dec1 = dec2) then
+        if dec1 = dec2 then
           EQUAL
         else
 
           (*  case when the natural numbers are the same, but their decimal
               of n1 < decimal of n2 *)
-          if (dec1 < dec2) then
+          if dec1 < dec2 then
             LESS
 
           (*  case when the natural numbers are the same, but their

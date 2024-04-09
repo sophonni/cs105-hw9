@@ -29,7 +29,7 @@ functor PQSortFn(structure Q : PQUEUE) :> SORT where type elem = Q.elem =
          *
         *)
         fun dequeMinAndCreateSortedList pq =
-            if (Q.isEmpty pq) then
+            if Q.isEmpty pq then
                 []
             else
                 let
