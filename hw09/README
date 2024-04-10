@@ -10,30 +10,9 @@ Any comments or feedback for course staff: none
 
 Time Spent: 14
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 Command Reference
-    - compile105-modules: compile all files together
-
-    Testing Natural Numbers Using Unit Test Written in 'nat-test.sml'
-        - compile105-modules natural.sml
-        - compile105-modules nat-test.sml 
-        - mosmlc -o test -I /comp/105/lib -toplevel natural.ui nat-test.sml:
-            run unit test for natural.sml
-
     Testing Natural Numbers
-        - compile105-modules natural.sml
+        - compile105-modules
         - ledit mosml -I /comp/105/lib
         - load "natural";
         - ctrl 'd' after testing
@@ -67,9 +46,3 @@ Command Reference
         - compile105-modules
         - sml-lint *.sml
         - submit105-modules
-
-TODO:
-    -   TA::CQ::double check q1.e
-    -   TA::CQ::ask q2.b
-    -   remove LeftAsExercise exception
-    -   TA::testing::how to run my 'nat-test.sml' unit test
