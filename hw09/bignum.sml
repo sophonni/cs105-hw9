@@ -1,4 +1,4 @@
-functor BignumFn(structure N : NATURAL) : BIGNUM =
+functor BignumFn(structure N : NATURAL) :> BIGNUM =
     struct
         (*  A 'bigint' is either 0, a negative natural number, or a
         *   positive natural number. The representation of the ntural
@@ -43,7 +43,8 @@ functor BignumFn(structure N : NATURAL) : BIGNUM =
                                 let
                                     val addOne = intVal + 1
                                     val negatedSum = addOne * ~1
-                                    val negatedNatAndAddOne = N./+/ (N.ofInt negatedSum, N.ofInt 1)
+                                    val negatedNatAndAddOne =
+                                        N./+/ (N.ofInt negatedSum, N.ofInt 1)
                                 in
                                     NEG negatedNatAndAddOne
                                 end
